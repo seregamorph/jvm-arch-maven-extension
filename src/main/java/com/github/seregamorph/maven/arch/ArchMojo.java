@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class ArchMojo extends AbstractMojo {
 
     private static final String PROP_SKIP_ARCH = "skipArch";
+    private static final String CMD_GET_CPU_BRAND = "sysctl -n machdep.cpu.brand_string";
 
     public void execute() throws MojoExecutionException {
         if (Boolean.parseBoolean(System.getProperty(PROP_SKIP_ARCH))) {
@@ -29,19 +30,19 @@ public class ArchMojo extends AbstractMojo {
             try {
                 // Special notes. Both "uname -m" and "machine" commands will not give correct result,
                 // because in case of Rosetta 2, they will return "x86_64" or "i486" instead of "arm64"/"arm64e".
-                getLog().info("Executing 'sysctl machdep.cpu.brand_string'");
-                Process process = Runtime.getRuntime().exec("sysctl machdep.cpu.brand_string");
+                getLog().info("Executing '" + CMD_GET_CPU_BRAND + "'");
+                Process process = Runtime.getRuntime().exec(CMD_GET_CPU_BRAND);
                 if (process.waitFor(5, TimeUnit.SECONDS)) {
                     try (InputStream in = process.getInputStream()) {
                         String cpuBrand = read(in).trim();
                         getLog().info(cpuBrand);
                         // Sample values:
-                        // "machdep.cpu.brand_string: Apple M1", "machdep.cpu.brand_string: Apple M3 Pro" for Apple Silicon
-                        // "machdep.cpu.brand_string: Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz" for Intel
-                        if (cpuBrand.contains(" Apple")) {
-                            throw new MojoExecutionException("The Maven is started on macOS intel-based JVM, " +
-                                    "but the real CPU is Apple Silicon. To avoid performance overhead, please use " +
-                                    "proper JVM for Apple Silicon.\n" +
+                        // "Apple M1", "Apple M3 Pro" for Apple Silicon
+                        // "Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz" for Intel
+                        if (cpuBrand.startsWith("Apple ")) {
+                            throw new MojoExecutionException("The Maven is started on macOS x64-based JVM, " +
+                                    "but the real CPU is '" + cpuBrand + "'. To avoid performance overhead, " +
+                                    "please use the proper JVM for Apple Silicon (aarch64).\n" +
                                     "To skip this validation, use '-D" + PROP_SKIP_ARCH + "=true' option.");
                         }
                     }
