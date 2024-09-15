@@ -7,6 +7,7 @@ If the JVM architecture is `"x86_64"` and the OS is `"Mac OS X"`, the plugin exe
 ```bash
 sysctl -n machdep.cpu.brand_string
 ``` 
+to ensure if it's a Rosetta emulation or not.
 
 ## Usage
 Add under in your pom.xml:
