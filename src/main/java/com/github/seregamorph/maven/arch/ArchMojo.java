@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
-@Mojo(name = "arch", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
+@Mojo(name = "arch", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true)
 public class ArchMojo extends AbstractMojo {
 
     private static final String PROP_SKIP_ARCH = "skipArch";
