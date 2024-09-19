@@ -4,7 +4,7 @@
 
     <groupId>com.github.seregamorph</groupId>
     <artifactId>arch-maven-plugin</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <description>Simple plugin that ensures CPU arch matches JDK arch to avoid emulation overhead.</description>
