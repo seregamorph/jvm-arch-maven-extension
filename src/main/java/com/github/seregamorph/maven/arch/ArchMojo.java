@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Maven goal to validate the architecture of the current JVM vs real CPU to avoid overhead of Rosetta emulation.
+ */
 @Mojo(name = "arch", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true)
 public class ArchMojo extends AbstractMojo {
 
@@ -29,7 +32,7 @@ public class ArchMojo extends AbstractMojo {
             // So, we need to check the real architecture
             try {
                 // Special notes. Both "uname -m" and "machine" commands will not give correct result,
-                // because in case of Rosetta 2, they will return "x86_64" or "i486" instead of "arm64"/"arm64e".
+                // because in case of Rosetta, they will return "x86_64" or "i486" instead of "arm64"/"arm64e".
                 getLog().info("Executing '" + CMD_GET_CPU_BRAND + "'");
                 Process process = Runtime.getRuntime().exec(CMD_GET_CPU_BRAND);
                 if (process.waitFor(5, TimeUnit.SECONDS)) {
