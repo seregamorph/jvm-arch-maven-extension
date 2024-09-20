@@ -17,7 +17,7 @@ Add under in your pom.xml:
         <plugin>
             <groupId>com.github.seregamorph</groupId>
             <artifactId>arch-maven-plugin</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.1</version>
             <inherited>false</inherited>
             <executions>
                 <execution>
