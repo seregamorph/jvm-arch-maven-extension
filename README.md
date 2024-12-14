@@ -31,3 +31,17 @@ Add under in your pom.xml:
     </plugins>
 </build>
 ```
+
+Sample failure:
+```
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.029 s (Wall Clock)
+[INFO] Finished at: 2024-12-14T12:25:24+01:00
+[INFO] ------------------------------------------------------------------------
+[INFO] 3 goals, 3 executed
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal com.github.seregamorph:arch-maven-plugin:0.2:arch (arch) on project pt: The Maven is started on macOS x64-based JVM, but the real CPU is 'Apple M3 Pro'. To avoid performance overhead, please use the proper JVM for Apple Silicon (aarch64).
+[ERROR] To skip this validation, use '-DskipArch=true' option.
+```
