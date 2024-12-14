@@ -27,6 +27,8 @@ public class JvmArchMojo extends AbstractMojo {
         String osName = System.getProperty("os.name");
         if ("Mac OS X".equals(osName)) {
             MacOsSupport.checkArch(getLog(), arch);
+        } else if ("windows".equals(osName)) {
+            WindowsSupport.checkArch(getLog(), arch);
         }
         long executionTimeMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
         getLog().debug("Execution time: " + executionTimeMs + "ms");
