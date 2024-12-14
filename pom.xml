@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.seregamorph</groupId>
-    <artifactId>arch-maven-plugin</artifactId>
+    <artifactId>jvm-arch-maven-plugin</artifactId>
     <version>0.2-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <description>Simple plugin that ensures CPU arch matches JDK arch to avoid emulation overhead.</description>
 
-    <url>https://github.com/seregamorph/arch-maven-plugin</url>
+    <url>https://github.com/seregamorph/jvm-arch-maven-plugin</url>
 
     <developers>
         <developer>
@@ -45,9 +45,9 @@
     </properties>
 
     <scm>
-        <url>https://github.com/seregamorph/arch-maven-plugin</url>
-        <connection>scm:git:git@github.com:seregamorph/arch-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:seregamorph/arch-maven-plugin.git</developerConnection>
+        <url>https://github.com/seregamorph/jvm-arch-maven-plugin</url>
+        <connection>scm:git:git@github.com:seregamorph/jvm-arch-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:seregamorph/jvm-arch-maven-plugin.git</developerConnection>
     </scm>
 
     <dependencies>
@@ -93,7 +93,7 @@
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>${maven-plugin.version}</version>
                 <configuration>
-                    <goalPrefix>arch-maven-plugin</goalPrefix>
+                    <goalPrefix>jvm-arch-maven-plugin</goalPrefix>
                     <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                 </configuration>
                 <executions>
