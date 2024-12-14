@@ -24,7 +24,7 @@ final class MacOsSupport {
                 Process process = Runtime.getRuntime().exec(CMD_GET_CPU_BRAND);
                 if (process.waitFor(5, TimeUnit.SECONDS)) {
                     try (InputStream in = process.getInputStream()) {
-                        String cpuBrand = IOUtils.read(in).trim();
+                        String cpuBrand = read(in).trim();
                         log.info("CPU Brand: " + cpuBrand);
                         // Sample values:
                         // "Apple M1", "Apple M3 Pro" for Apple Silicon
@@ -32,8 +32,8 @@ final class MacOsSupport {
                         String javaHome = System.getProperty("java.home");
                         if (cpuBrand.startsWith("Apple ")) {
                             throw new MojoExecutionException("The Maven is started on macOS x64-based JVM\n"
-                                    + javaHome + " but the real CPU is '" + cpuBrand + "'. To avoid performance overhead, "
-                                    + "please use the proper JVM for Apple Silicon (aarch64).\n"
+                                    + javaHome + " but the real CPU is '" + cpuBrand + "'. To avoid emulation " +
+                                    "performance overhead, please use the proper JVM for Apple Silicon (aarch64).\n"
                                     + "To skip this validation, use '-D" + PROP_SKIP_JVM_ARCH + "=true' option.");
                         }
                     }
@@ -44,6 +44,16 @@ final class MacOsSupport {
                 log.error("Failed to get CPU architecture", e);
             }
         }
+    }
+
+    private static String read(InputStream input) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = input.read(buffer)) != -1) {
+            builder.append(new String(buffer, 0, read));
+        }
+        return builder.toString();
     }
 
     private MacOsSupport() {
