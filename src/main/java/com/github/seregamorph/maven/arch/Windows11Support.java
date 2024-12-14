@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.github.seregamorph.maven.arch.JvmArchMojo.PROP_SKIP_JVM_ARCH;
 
-class WindowsSupport {
+class Windows11Support {
 
     private static final String CMD_SYSTEMINFO = "systeminfo";
 
@@ -27,21 +27,24 @@ class WindowsSupport {
                         // note: it's multiline and localized (not only English)
                         String systemInfo = IOUtils.read(in).trim();
                         log.debug("System info:\n" + systemInfo);
-                        // Sample value (substring of multi-line)
                         /*
+                        Sample value (substring of multi-line)
+                        ...
                         System Type:    ARM64-based PC
                         Processor(s):   1 Processor(s) Installed.
                                         [01]: ARMv8 (64-bit) Family 8 Model 0 Revision   0 Apple ~2000 МГц
-                        */
-                        // or for x64
-                        /*
+                        ...
+                        or for x64
+                        ...
                         System Type:    x64-based PC
+                        ...
                         */
+                        String javaHome = System.getProperty("java.home");
                         if (systemInfo.contains("ARM64-based PC")) {
-                            throw new MojoExecutionException("The Maven is started on Windows x64-based JVM, " +
-                                    "but the real CPU is 'ARM64'. To avoid performance overhead, " +
-                                    "please use the proper JVM for Windows (aarch64).\n" +
-                                    "To skip this validation, use '-D" + PROP_SKIP_JVM_ARCH + "=true' option.");
+                            throw new MojoExecutionException("The Maven is started on Windows x64-based JVM\n"
+                                    + javaHome + " but the real CPU is 'ARM64'. To avoid performance overhead, "
+                                    + "please use the proper JVM for Windows (aarch64).\n"
+                                    + "To skip this validation, use '-D" + PROP_SKIP_JVM_ARCH + "=true' option.");
                         }
                     }
                 } else {
@@ -53,6 +56,6 @@ class WindowsSupport {
         }
     }
 
-    private WindowsSupport() {
+    private Windows11Support() {
     }
 }

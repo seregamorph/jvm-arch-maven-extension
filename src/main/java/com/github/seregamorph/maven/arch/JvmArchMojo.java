@@ -24,12 +24,14 @@ public class JvmArchMojo extends AbstractMojo {
 
         long startTime = System.nanoTime();
         try {
-            String arch = System.getProperty("os.arch");
+            String osArch = System.getProperty("os.arch");
             String osName = System.getProperty("os.name");
+            getLog().debug("os.arch: " + osArch);
+            getLog().debug("os.name: " + osName);
             if ("Mac OS X".equals(osName)) {
-                MacOsSupport.checkArch(getLog(), arch);
-            } else if ("windows".equals(osName)) {
-                WindowsSupport.checkArch(getLog(), arch);
+                MacOsSupport.checkArch(getLog(), osArch);
+            } else if ("Windows 11".equals(osName)) {
+                Windows11Support.checkArch(getLog(), osArch);
             }
         } finally {
             long executionTimeMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);

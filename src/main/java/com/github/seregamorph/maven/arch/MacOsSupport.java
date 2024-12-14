@@ -25,15 +25,16 @@ final class MacOsSupport {
                 if (process.waitFor(5, TimeUnit.SECONDS)) {
                     try (InputStream in = process.getInputStream()) {
                         String cpuBrand = IOUtils.read(in).trim();
-                        log.info(cpuBrand);
+                        log.info("CPU Brand: " + cpuBrand);
                         // Sample values:
                         // "Apple M1", "Apple M3 Pro" for Apple Silicon
                         // "Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz" for Intel
+                        String javaHome = System.getProperty("java.home");
                         if (cpuBrand.startsWith("Apple ")) {
-                            throw new MojoExecutionException("The Maven is started on macOS x64-based JVM, " +
-                                    "but the real CPU is '" + cpuBrand + "'. To avoid performance overhead, " +
-                                    "please use the proper JVM for Apple Silicon (aarch64).\n" +
-                                    "To skip this validation, use '-D" + PROP_SKIP_JVM_ARCH + "=true' option.");
+                            throw new MojoExecutionException("The Maven is started on macOS x64-based JVM\n"
+                                    + javaHome + " but the real CPU is '" + cpuBrand + "'. To avoid performance overhead, "
+                                    + "please use the proper JVM for Apple Silicon (aarch64).\n"
+                                    + "To skip this validation, use '-D" + PROP_SKIP_JVM_ARCH + "=true' option.");
                         }
                     }
                 } else {
