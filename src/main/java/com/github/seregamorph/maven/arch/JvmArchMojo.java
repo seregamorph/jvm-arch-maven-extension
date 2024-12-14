@@ -5,6 +5,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Maven goal to validate the architecture of the current JVM vs real CPU to avoid overhead of Rosetta emulation.
  */
@@ -20,10 +22,13 @@ public class JvmArchMojo extends AbstractMojo {
             return;
         }
 
+        long startTime = System.nanoTime();
         String arch = System.getProperty("os.arch");
         String osName = System.getProperty("os.name");
         if ("Mac OS X".equals(osName)) {
             MacOsSupport.checkArch(getLog(), arch);
         }
+        long executionTimeMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+        getLog().debug("Execution time: " + executionTimeMs + "ms");
     }
 }
