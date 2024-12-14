@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
-import static com.github.seregamorph.maven.arch.ArchMojo.PROP_SKIP_ARCH;
+import static com.github.seregamorph.maven.arch.JvmArchMojo.PROP_SKIP_JVM_ARCH;
 
 final class MacOsSupport {
 
@@ -33,7 +33,7 @@ final class MacOsSupport {
                             throw new MojoExecutionException("The Maven is started on macOS x64-based JVM, " +
                                     "but the real CPU is '" + cpuBrand + "'. To avoid performance overhead, " +
                                     "please use the proper JVM for Apple Silicon (aarch64).\n" +
-                                    "To skip this validation, use '-D" + PROP_SKIP_ARCH + "=true' option.");
+                                    "To skip this validation, use '-D" + PROP_SKIP_JVM_ARCH + "=true' option.");
                         }
                     }
                 } else {

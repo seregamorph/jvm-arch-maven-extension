@@ -7,7 +7,7 @@
     <version>0.2-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
-    <description>Simple plugin that ensures CPU arch matches JDK arch to avoid emulation overhead.</description>
+    <description>Simple plugin that ensures CPU arch matches JVM arch to avoid emulation overhead.</description>
 
     <url>https://github.com/seregamorph/jvm-arch-maven-plugin</url>
 

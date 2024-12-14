@@ -21,9 +21,9 @@ Add to the root pom.xml:
             <inherited>false</inherited>
             <executions>
                 <execution>
-                    <id>arch</id>
+                    <id>jvm-arch</id>
                     <goals>
-                        <goal>arch</goal>
+                        <goal>jvm-arch</goal>
                     </goals>
                 </execution>
             </executions>
@@ -42,6 +42,6 @@ Sample failure:
 [INFO] ------------------------------------------------------------------------
 [INFO] 3 goals, 3 executed
 [INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal com.github.seregamorph:jvm-arch-maven-plugin:0.2:arch (arch) on project pt: The Maven is started on macOS x64-based JVM, but the real CPU is 'Apple M3 Pro'. To avoid performance overhead, please use the proper JVM for Apple Silicon (aarch64).
-[ERROR] To skip this validation, use '-DskipArch=true' option.
+[ERROR] Failed to execute goal com.github.seregamorph:jvm-arch-maven-plugin:0.2:jvm-arch (jvm-arch) on project pt: The Maven is started on macOS x64-based JVM, but the real CPU is 'Apple M3 Pro'. To avoid performance overhead, please use the proper JVM for Apple Silicon (aarch64).
+[ERROR] To skip this validation, use '-DskipJvmArch=true' option.
 ```

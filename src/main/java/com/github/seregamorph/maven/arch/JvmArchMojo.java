@@ -8,14 +8,14 @@ import org.apache.maven.plugins.annotations.Mojo;
 /**
  * Maven goal to validate the architecture of the current JVM vs real CPU to avoid overhead of Rosetta emulation.
  */
-@Mojo(name = "arch", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true)
-public class ArchMojo extends AbstractMojo {
+@Mojo(name = "jvm-arch", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true)
+public class JvmArchMojo extends AbstractMojo {
 
-    static final String PROP_SKIP_ARCH = "skipArch";
+    static final String PROP_SKIP_JVM_ARCH = "skipJvmArch";
 
     @Override
     public void execute() throws MojoExecutionException {
-        if (Boolean.parseBoolean(System.getProperty(PROP_SKIP_ARCH))) {
+        if (Boolean.parseBoolean(System.getProperty(PROP_SKIP_JVM_ARCH))) {
             getLog().info("Skipping architecture validation");
             return;
         }
