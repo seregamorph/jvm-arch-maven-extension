@@ -27,7 +27,7 @@ final class MacOsSupport {
                         String cpuBrand = read(in).trim();
                         log.info("CPU Brand: " + cpuBrand);
                         // Sample values:
-                        // "Apple M1", "Apple M3 Pro" for Apple Silicon
+                        // "Apple M1", "Apple M3 Pro", "Apple M4 Max" for Apple Silicon
                         // "Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz" for Intel
                         String javaHome = System.getProperty("java.home");
                         if (cpuBrand.startsWith("Apple ")) {
