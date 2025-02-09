@@ -32,6 +32,10 @@ final class MacOsSupport {
                                     + javaHome + " but the real CPU is '" + cpuBrand + "'. To avoid emulation "
                                     + "performance overhead, please use the proper JVM for Apple Silicon (aarch64).");
                         }
+                        /*
+                        Alternative solution to check the CPU architecture (not working on older macOS versions):
+                        exec "sysctl -n sysctl.proc_translated" and compare result with "1" (Rosetta is active)
+                         */
                     }
                 } else {
                     log.warn("Timeout waiting for CPU brand");
