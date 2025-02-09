@@ -21,7 +21,7 @@ Add to the root pom.xml:
         <plugin>
             <groupId>com.github.seregamorph</groupId>
             <artifactId>jvm-arch-maven-plugin</artifactId>
-            <version>0.1</version>
+            <version>0.2</version>
             <inherited>false</inherited>
             <executions>
                 <execution>
@@ -29,6 +29,10 @@ Add to the root pom.xml:
                     <goals>
                         <goal>jvm-arch</goal>
                     </goals>
+                    <configuration>
+                        <!-- Can be WARN or FAIL -->
+                        <policy>FAIL</policy>
+                    </configuration>
                 </execution>
             </executions>
         </plugin>
