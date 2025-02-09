@@ -4,6 +4,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -13,7 +14,16 @@ import java.util.concurrent.TimeUnit;
 @Mojo(name = "jvm-arch", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true)
 public class JvmArchMojo extends AbstractMojo {
 
-    static final String PROP_SKIP_JVM_ARCH = "skipJvmArch";
+    private static final String ANSI_RED = "\u001B[31m";
+
+    private static final String PROP_SKIP_JVM_ARCH = "skipJvmArch";
+
+    /**
+     * Plugin behaviour in case of JVM arch does not match the real CPU arch.
+     * Possible values: FAIL, WARN.
+     */
+    @Parameter(property = "jvmArchPolicy", defaultValue = "FAIL")
+    private Policy policy = Policy.FAIL;
 
     @Override
     public void execute() throws MojoExecutionException {
@@ -32,6 +42,13 @@ public class JvmArchMojo extends AbstractMojo {
                 MacOsSupport.checkArch(getLog(), osArch);
             } else if ("Windows 11".equals(osName)) {
                 Windows11Support.checkArch(getLog(), osArch);
+            }
+        } catch (JvmArchViolationException e) {
+            if (policy == Policy.WARN) {
+                getLog().warn(ANSI_RED + e.getMessage());
+            } else {
+                getLog().info("To skip this validation, use '-D" + PROP_SKIP_JVM_ARCH + "=true' option.");
+                throw e;
             }
         } finally {
             long executionTimeMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);

@@ -1,13 +1,10 @@
 package com.github.seregamorph.maven.arch;
 
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
-
-import static com.github.seregamorph.maven.arch.JvmArchMojo.PROP_SKIP_JVM_ARCH;
 
 class Windows11Support {
 
-    static void checkArch(Log log, String arch) throws MojoExecutionException {
+    static void checkArch(Log log, String arch) throws JvmArchViolationException {
         if ("amd64".equals(arch)) {
             // The Maven is started on Windows intel-based JVM, but it can be ARM CPU with x64 emulation.
             // So, we need to check the real CPU architecture.
@@ -21,11 +18,10 @@ class Windows11Support {
             // "ARMv8 (64-bit) Family 8 Model 0 Revision   0, Apple"
             if (processorIdentifier != null && processorIdentifier.contains("ARMv8")) {
                 String javaHome = System.getProperty("java.home");
-                throw new MojoExecutionException("The Maven is started on Windows x64-based JVM\n"
+                throw new JvmArchViolationException("The Maven is started on Windows x64-based JVM\n"
                         + javaHome + " but the real CPU is '" + processorIdentifier
                         + "'. To avoid emulation performance overhead, "
-                        + "please use the proper JVM for Windows (aarch64).\n"
-                        + "To skip this validation, use '-D" + PROP_SKIP_JVM_ARCH + "=true' option.");
+                        + "please use the proper JVM for Windows (aarch64).");
             }
         }
     }
