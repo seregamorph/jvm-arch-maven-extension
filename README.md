@@ -1,4 +1,7 @@
 
+[![Maven Central Version](https://img.shields.io/maven-central/v/com.github.seregamorph/jvm-arch-maven-plugin?style=flat-square)](https://central.sonatype.com/artifact/com.github.seregamorph/jvm-arch-maven-plugin/overview)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
 # CPU architecture validation plugin
 Checks if the JVM is started for the real CPU architecture to avoid performance overhead of running Rosetta.
 
