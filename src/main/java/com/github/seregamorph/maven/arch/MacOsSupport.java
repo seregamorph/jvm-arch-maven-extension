@@ -29,7 +29,7 @@ final class MacOsSupport {
                         String javaHome = System.getProperty("java.home");
                         if (cpuBrand.startsWith("Apple ")) {
                             throw new JvmArchViolationException("The started JVM is macOS x64-based \n"
-                                    + javaHome + " but the real CPU is '" + cpuBrand + "'. To avoid emulation "
+                                    + javaHome + " but the real CPU is '" + cpuBrand + "'.\nTo avoid emulation "
                                     + "performance overhead, please use the proper JVM for Apple Silicon (aarch64).");
                         }
                         /*

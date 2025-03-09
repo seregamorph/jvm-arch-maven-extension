@@ -20,7 +20,7 @@ final class Windows11Support {
                 String javaHome = System.getProperty("java.home");
                 throw new JvmArchViolationException("The started JVM is Windows x64-based \n"
                         + javaHome + " but the real CPU is '" + processorIdentifier
-                        + "'. To avoid emulation performance overhead, "
+                        + "'.\nTo avoid emulation performance overhead, "
                         + "please use the proper JVM for Windows (aarch64).");
             }
         }
