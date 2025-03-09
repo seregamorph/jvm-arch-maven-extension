@@ -1,6 +1,6 @@
 package com.github.seregamorph.maven.arch;
 
-import org.apache.maven.plugin.logging.Log;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ final class MacOsSupport {
 
     private static final String CMD_GET_CPU_BRAND = "sysctl -n machdep.cpu.brand_string";
 
-    static void checkArch(Log log, String arch) throws JvmArchViolationException {
+    static void checkArch(Logger log, String arch) throws JvmArchViolationException {
         if ("x86_64".equals(arch)) {
             // The Maven is started on macOS intel-based JVM, but it can be Apple Silicon CPU
             // So, we need to check the real architecture
@@ -22,13 +22,13 @@ final class MacOsSupport {
                 if (process.waitFor(5, TimeUnit.SECONDS)) {
                     try (InputStream in = process.getInputStream()) {
                         String cpuBrand = read(in).trim();
-                        log.info("CPU Brand: " + cpuBrand);
+                        log.info("CPU Brand: {}", cpuBrand);
                         // Sample values:
                         // "Apple M1", "Apple M3 Pro", "Apple M4 Max" for Apple Silicon
                         // "Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz" for Intel
                         String javaHome = System.getProperty("java.home");
                         if (cpuBrand.startsWith("Apple ")) {
-                            throw new JvmArchViolationException("The Maven is started on macOS x64-based JVM\n"
+                            throw new JvmArchViolationException("The started JVM is macOS x64-based \n"
                                     + javaHome + " but the real CPU is '" + cpuBrand + "'. To avoid emulation "
                                     + "performance overhead, please use the proper JVM for Apple Silicon (aarch64).");
                         }
