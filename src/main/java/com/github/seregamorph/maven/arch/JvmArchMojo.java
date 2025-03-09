@@ -1,7 +1,6 @@
 package com.github.seregamorph.maven.arch;
 
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -26,7 +25,7 @@ public class JvmArchMojo extends AbstractMojo {
     private Policy policy = Policy.FAIL;
 
     @Override
-    public void execute() throws MojoExecutionException {
+    public void execute() {
         if (Boolean.parseBoolean(System.getProperty(PROP_SKIP_JVM_ARCH))) {
             getLog().info("Skipping architecture validation");
             return;
@@ -34,15 +33,7 @@ public class JvmArchMojo extends AbstractMojo {
 
         long startTime = System.nanoTime();
         try {
-            String osArch = System.getProperty("os.arch");
-            String osName = System.getProperty("os.name");
-            getLog().debug("os.arch: " + osArch);
-            getLog().debug("os.name: " + osName);
-            if ("Mac OS X".equals(osName)) {
-                MacOsSupport.checkArch(getLog(), osArch);
-            } else if ("Windows 11".equals(osName)) {
-                Windows11Support.checkArch(getLog(), osArch);
-            }
+            JvmArchValidator.validateJvmArch();
         } catch (JvmArchViolationException e) {
             if (policy == Policy.WARN) {
                 getLog().warn(ANSI_RED + e.getMessage());
