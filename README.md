@@ -24,7 +24,7 @@ Add to the root pom.xml:
         <extension>
             <groupId>com.github.seregamorph</groupId>
             <artifactId>jvm-arch-maven-extension</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.1</version>
         </extension>
     </extensions>
 </build>
@@ -35,7 +35,7 @@ or to `.mvn/extensions.xml`:
     <extension>
         <groupId>com.github.seregamorph</groupId>
         <artifactId>jvm-arch-maven-extension</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.1</version>
     </extension>
 </extensions>
 ```
