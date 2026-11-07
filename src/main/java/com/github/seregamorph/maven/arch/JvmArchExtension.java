@@ -33,6 +33,7 @@ public class JvmArchExtension extends AbstractMavenLifecycleParticipant {
     private Policy policy = Policy.FAIL;
     private String additionalFailureMessage;
 
+    private boolean executedOnce;
     /**
      * Set to true if arch validation was successful on afterProjectsRead to avoid second execution
      */
@@ -59,15 +60,34 @@ public class JvmArchExtension extends AbstractMavenLifecycleParticipant {
     }
 
     @Override
+    public void afterSessionStart(MavenSession session) throws MavenExecutionException {
+        // Implementation notice: this method is called once in CLI execution, once in Maven execution via IDEA
+        // (specifies "idea.version" property) and once in IDEA import (IDEA also specifies "idea.version" and
+        // "idea.maven.embedder.version" properties).
+        // But it is NOT executed if the extension is defined via <build><extensions> in pom.xml
+    }
+
+    @Override
     public void afterProjectsRead(MavenSession session) throws MavenExecutionException {
-        if (exec()) {
-            passed = true;
+        // Implementation notice: this method is called once in CLI execution with the whole set of modules,
+        // same for run Maven from IDEA (specifies "idea.version" property), but
+        // runs once PER EACH module during the IDEA import.
+        // It is also executed if the extension is defined via <build><extensions> in pom.xml
+        if (!executedOnce) {
+            executedOnce = true;
+            if (exec()) {
+                passed = true;
+            }
         }
     }
 
     @Override
     public void afterSessionEnd(MavenSession session) throws MavenExecutionException {
+        // Implementation notice: this method is called once in CLI execution, same while running Maven from IDEA
+        // and never during the IDEA reimport
+        // It is also executed if the extension is defined via <build><extensions> in pom.xml
         if (!passed) {
+            // to log in the end of the execution again
             exec();
         }
     }
