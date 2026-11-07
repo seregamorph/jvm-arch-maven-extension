@@ -4,7 +4,7 @@
 
     <groupId>com.github.seregamorph</groupId>
     <artifactId>jvm-arch-maven-extension</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
     <packaging>jar</packaging>
 
     <name>jvm-arch-maven-extension</name>
@@ -36,7 +36,7 @@
         <!--
         https://maven.apache.org/guides/mini/guide-reproducible-builds.html
         -->
-        <project.build.outputTimestamp>2025-01-01T01:00:00Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2026-11-07T12:29:11Z</project.build.outputTimestamp>
 
         <maven.version>3.9.16</maven.version>
 
