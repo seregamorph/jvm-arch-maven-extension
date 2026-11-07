@@ -7,6 +7,7 @@
     <version>0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <name>jvm-arch-maven-extension</name>
     <description>Maven extension that ensures CPU arch matches JVM arch to avoid emulation overhead</description>
 
     <url>https://github.com/seregamorph/jvm-arch-maven-extension</url>
